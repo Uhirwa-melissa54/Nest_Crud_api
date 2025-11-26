@@ -3,9 +3,9 @@ import { IsEmail, IsNotEmpty } from "class-validator"
 export class AuthDto{
 @IsEmail()
 @IsNotEmpty()   
-email:String
+email:string
 @IsNotEmpty()
-password:String
-firstName:String
-lastName:String
+password:string
+firstName:string
+lastName:string
 }

@@ -20,7 +20,6 @@ model User {
 
 model Bookmark{
    id  Int     @id @default(autoincrement())
- 
   title String
   description String
   createdAt DateTime @default(now())

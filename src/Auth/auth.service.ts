@@ -29,5 +29,21 @@ return user;
     }
 
     }
+    async signin(dto:AuthDto){
+        const user=await this.prisma.user.findUnique({
+            where:{
+                email:dto.email
+            }
+        })
+        if(!user){
+            throw new ForbiddenException("Email not registered");
+        }
+        const pwMatches= await argon2.verify(user.password,dto.password)
+        if(!pwMatches){
+            throw new ForbiddenException("Invalid credentials")
+        }
+        return user;
+        
+    }
 }
 

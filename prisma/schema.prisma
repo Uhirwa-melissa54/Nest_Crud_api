@@ -19,7 +19,8 @@ model User {
 }
 
 model Bookmark{
-   id        Int     @id @default(autoincrement())
+   id  Int     @id @default(autoincrement())
+   String name
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

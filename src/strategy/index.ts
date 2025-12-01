@@ -9,4 +9,13 @@ export class JwtStrategy extends PassportStrategy(PassportJwtStrategy) {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // Read JWT from "Authorization: Bearer <token>"
       secretOrKey: 'SECRET_KEY', // Replace with env variable
       ignoreExpiration: false,
-    })
+    });
+  }
+
+  async validate(payload: any) {
+    // Whatever you return here becomes req.user
+    return { userId: payload.sub, username: payload.username };
+  }
+}
+
+

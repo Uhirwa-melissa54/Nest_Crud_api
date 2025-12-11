@@ -57,10 +57,9 @@ export class AuthService {
     return tokens;
   }
 
-  // ---------------- GENERATE TOKENS ----------------
   async getTokens(userId: number, email: string) {
     const jwtSecret = this.config.get("JWT_SECRET");
-    const rtSecret = this.config.get("JWT_REFRESH_SECRET");
+    const rtSecret = this.config.get("JWT_SECRET");
 
     const payload = { sub: userId, email };
 
@@ -77,7 +76,7 @@ export class AuthService {
     return { accessToken, refreshToken };
   }
 
-  // ---------------- SAVE HASHED REFRESH TOKEN ----------------
+
   async updateRefreshToken(userId: number, refreshToken: string) {
     const hashedRt = await argon2.hash(refreshToken);
 

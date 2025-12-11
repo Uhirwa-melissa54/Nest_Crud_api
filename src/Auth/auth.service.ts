@@ -5,13 +5,15 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
+import { EmailService } from "src/email/email.service";
 
 @Injectable()
 export class AuthService {
   constructor(
     private prisma: PrismaService,
     private jwt: JwtService,
-    private config: ConfigService
+    private config: ConfigService,
+    private emailService:EmailService
   ) {}
 
  
@@ -28,6 +30,8 @@ export class AuthService {
       });
 
       const tokens = await this.getTokens(user.id, user.email);
+      this.emailService.sendWelcomeEmail(dto.email,dto.firstName)
+
      
 
       return tokens;
@@ -52,6 +56,7 @@ export class AuthService {
     if (!pwMatches) throw new ForbiddenException("Invalid credentials");
 
     const tokens = await this.getTokens(user.id, user.email);
+    this.emailService.sendWelcomeEmail(dto.email,dto.firstName)
   
 
     return tokens;

@@ -40,7 +40,7 @@ export class AuthService {
     }
   }
 
-  // ----------------  SIGNIN  ----------------
+ 
   async signin(dto: AuthDto) {
     const user = await this.prisma.user.findUnique({
       where: { email: dto.email },
@@ -77,30 +77,6 @@ export class AuthService {
   }
 
 
-  async updateRefreshToken(userId: number, refreshToken: string) {
-    const hashedRt = await argon2.hash(refreshToken);
 
-    await this.prisma.user.update({
-      where: { id: userId },
-      data: { hashedRt },
-    });
-  }
-
-  // ---------------- REFRESH TOKEN ----------------
-  async refreshTokens(userId: number, rt: string) {
-    const user = await this.prisma.user.findUnique({
-      where: { id: userId },
-    });
-
-    if (!user || !user.hashedRt)
-      throw new ForbiddenException("Access Denied");
-
-    const rtMatches = await argon2.verify(user.hashedRt, rt);
-    if (!rtMatches) throw new ForbiddenException("Access Denied");
-
-    const tokens = await this.getTokens(user.id, user.email);
-    await this.updateRefreshToken(user.id, tokens.refreshToken);
-
-    return tokens;
-  }
+  
 }

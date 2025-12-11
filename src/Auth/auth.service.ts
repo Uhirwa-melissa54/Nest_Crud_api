@@ -14,7 +14,7 @@ export class AuthService {
     private config: ConfigService
   ) {}
 
-  // ----------------  SIGNUP  ----------------
+ 
   async signUp(dto: AuthDto) {
     try {
       const hashedPassword = await argon2.hash(dto.password);
@@ -28,7 +28,7 @@ export class AuthService {
       });
 
       const tokens = await this.getTokens(user.id, user.email);
-      await this.updateRefreshToken(user.id, tokens.refreshToken);
+     
 
       return tokens;
     } catch (error) {
@@ -52,7 +52,7 @@ export class AuthService {
     if (!pwMatches) throw new ForbiddenException("Invalid credentials");
 
     const tokens = await this.getTokens(user.id, user.email);
-    await this.updateRefreshToken(user.id, tokens.refreshToken);
+  
 
     return tokens;
   }

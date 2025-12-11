@@ -5,7 +5,7 @@ import { Transporter } from 'nodemailer';
 
 @Injectable()
 export class EmailService{
-    private transporter;
+    private transporter:Transporter;
     constructor(){
         this.transporter=nodemailer.createTransport({
       host: 'smtp.gmail.com',
